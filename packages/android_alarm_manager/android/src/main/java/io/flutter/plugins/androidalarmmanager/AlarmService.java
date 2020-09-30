@@ -11,8 +11,10 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Handler;
 import android.util.Log;
-import androidx.core.app.AlarmManagerCompat;
-import androidx.core.app.JobIntentService;
+
+import org.json.JSONException;
+import org.json.JSONObject;
+
 import java.util.Collections;
 import java.util.HashMap;
 import java.util.HashSet;
@@ -20,8 +22,9 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 import java.util.concurrent.CountDownLatch;
-import org.json.JSONException;
-import org.json.JSONObject;
+
+import androidx.core.app.AlarmManagerCompat;
+import androidx.core.app.JobIntentService;
 
 public class AlarmService extends JobIntentService {
   private static final String TAG = "AlarmService";
@@ -136,6 +139,7 @@ public class AlarmService extends JobIntentService {
     Intent alarm = new Intent(context, AlarmBroadcastReceiver.class);
     alarm.putExtra("id", requestCode);
     alarm.putExtra("callbackHandle", callbackHandle);
+    alarm.putExtra("wakeup", wakeup);
     PendingIntent pendingIntent =
         PendingIntent.getBroadcast(context, requestCode, alarm, PendingIntent.FLAG_UPDATE_CURRENT);
 
